@@ -8,15 +8,20 @@ best <- function(state, outcome){
                 print("state is not valid, try again")
                 stop()
                 }
-        else if (outcome == "heart attack") {sick <- "Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack"}
-        else if (outcome == "heart failure") {sick <- "Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure"}
-        else if (outcome == "pneumonia") {sick <- "Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia"}
+        else if (outcome == "heart attack") {r_oc <- oc[,c(2,9,13)]}
+        #column 13 "Hospital.30.Day.Death..Mortality..Rates.from.Heart.Attack"
+        else if (outcome == "heart failure") {r_oc <- oc[,c(2,9,19)]}
+        #column 19 "Hospital.30.Day.Death..Mortality..Rates.from.Heart.Failure"
+        else if (outcome == "pneumonia") {r_oc <- oc[,c(2,9,25)]}
+        #column 25 "Hospital.30.Day.Death..Mortality..Rates.from.Pneumonia"
         else {
                 print("sickness is not valid, try again")
                 stop()}
-        sick
         ## Return hospital name in that state with lowest 30-day death
-        r_oc <- oc[,order(oc[,sick])]
-        r_oc
+        r_oc <- subset(r_oc, r_oc[,2]!="Not Available")
+        o_oc <- r_oc[order(r_oc,r_oc[,2])]
+        head(o_oc)
+        
+        
 
 }
