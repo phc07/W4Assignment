@@ -18,16 +18,23 @@ rankall <- function(outcome, num = "best") {
         ## Return hospital name in that state with the given rank
         ## 30-day death rate
         
-        c_name <- names(r_oc[3])
-        o_oc <- r_oc[order(r_oc[3],r_oc[2]),]
-        nrow(o_oc)
+        o_oc <- r_oc[order(r_oc[2],r_oc[3]),]
         
-        if (num=="best"){r <- 1}
-        else if (num=="worst") {r <- nrow(r_oc)}
-        else {r <- num}
+        if (num=="best"){
+                r <- 1
+                f_oc <- do.call(rbind,by(o_oc,o_oc$State,function(x) x[r,1:2]))
+                }
+        else if (num=="worst") {
+                t_oc <- aggregate(o_oc,list(o_oc[,2]),tail,1)
+                f_oc <- t_oc[,1:2]
+                }
+        else {
+                r <- num
+                f_oc <- do.call(rbind,by(o_oc,o_oc$State,function(x) x[r,1:2]))
+                }
         
         #f_oc <- o_oc(,[1], o_oc[2],o_oc[r,c(1,2)])
-        #f_oc <- do.call(rbind,by(o_oc,o_oc$State,function(x) x[r,]))
-        f_oc <- ddply(o_oc,o_oc[,2],function(r) o_oc[r,])
+        #f_oc <- do.call(rbind,by(o_oc,o_oc$State,function(x) x[r,1:2]))
+        #f_oc <- tapply(r_oc, r_oc[,2],function(r) r_oc[r,])
         f_oc
 }

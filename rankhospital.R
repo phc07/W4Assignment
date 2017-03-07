@@ -24,7 +24,7 @@ rankhospital <- function(state, outcome, num = "best") {
         ## 30-day death rate
         
         c_name <- names(r_oc[3])
-        o_oc <- r_oc[order(r_oc[3],r_oc[2]),]
+        o_oc <- r_oc[order(r_oc[2],r_oc[3]),]
         nrow(o_oc)
         
         if (num=="best"){r <- 1}
